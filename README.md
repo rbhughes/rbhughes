@@ -1,4 +1,10 @@
-## Aloha y'all 👋
+## Welcome to my repo collection!
+
+- 📊
+- 🛢
+- ☢️
+- 🐈
+- 🐍
 
 <!--
 **rbhughes/rbhughes** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
