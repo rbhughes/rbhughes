@@ -21,4 +21,5 @@ I'm a data engineer in Chicago. I've spent 15+ years wrangling petroleum and geo
 ## 📫 Reach me
 
 - Email: [bryan@purr.io](mailto:bryan@purr.io)
+- Web: [purr.io](https://purr.io) — home base, freshly rebuilt and growing
 - The cat distribution system also assigned me [thequirkykitty.com](https://thequirkykitty.com)
