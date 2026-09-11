@@ -1,17 +1,18 @@
 # Hi, I'm Bryan 👋
 
-I'm a data engineer in Chicago. I've spent 15+ years wrangling petroleum and geoscience data — the messy, vendor-locked kind — and building the pipelines and tooling to set it free. These days that thread runs into **grounded-LLM systems**: agents you can trust with real data, and the deterministic machinery that keeps them honest. My portfolio lives at **[purr.io](https://purr.io)**.
+I'm a data engineer in Chicago. I've spent 15+ years wrangling petroleum and geoscience data — the messy, vendor-locked kind — and building the pipelines and tooling to set it free. Lately that means AI systems that answer questions from real data without making things up. My portfolio lives at **[purr.io](https://purr.io)**.
 
-## 🛠️ Production grounded-LLM systems
+## 🛠️ Recent contract work
 
-Most recently I built and evaluated a production grounded-LLM system — a conversational analytics engine over oil & gas well data (DuckDB over Parquet, multi-provider LLM back end) for a commercial well-data platform. That work is proprietary, so no code or names here — but the parts I care most about are the ones that exist because the model can't be trusted:
+For the past while I built the AI side of a commercial oil & gas data platform: you ask questions in plain English, it answers from the actual well database. The work is proprietary so there's no code to show and I won't name the client, but the part worth describing is everything built around the model to keep it honest:
 
-- **Grounding as code, not prompts** — the model writes prose with fact references, never raw numbers; deterministic gates resolve citations, strip anything ungrounded (numbers, entities, fabrication phrases), and emit a provenance audit with a zero-leak invariant. Table-driven unit tests pin every gate behavior, in CI on every push.
-- **A bounded agent loop with failure-driven re-planning** — hard step caps with failure headroom, so a failed SQL hop is diagnosed and re-planned instead of aborting; typed stop reasons on every exit; deterministic "belt tools" for recurring analytics so the planner calls code, not vibes.
-- **Evaluation that survives stochasticity** — an LLM-as-judge harness with rubric dispatch (factual turns graded on correctness, analysis turns on insight — never the reverse), median-of-N grading gated on the typical roll, per-fixture grade history with drift detection, and a fixture that uploads a hostile persona and asserts the grounding gates hold.
-- **Data releases that can't silently degrade** — ETL from Oracle/PPDM to Parquet with atomic writes, bounded memory, and a provenance manifest carrying per-file row counts: a release that unexpectedly shrinks fails loudly instead of shipping.
+- The model never supplies a number from memory. Every figure comes from a query run against the database at answer time; the model's job is deciding which queries to run and writing prose around the results.
+- After it writes, ordinary Python checks the draft against the query results. A number that isn't in the results gets deleted. An operator or formation the queries never returned can't be named. Each answer keeps a record of where every fact came from.
+- When a query fails, the agent gets a few chances to figure out why and try another approach, then stops and says why. It doesn't flail, and it doesn't paper over the gap with a guess.
+- Quality was checked by replaying a suite of real analyst conversations against the live system on every change, scored against fixed pass bars, with a running history so a slow slide in answer quality shows up as a red build instead of a hunch. One test feeds it deliberately misleading input just to prove the guardrails hold.
+- Underneath, the data moved from Oracle to Parquet through a pipeline that refuses to publish a release with fewer rows than the last one. Silent data loss fails loudly.
 
-The same design DNA runs through everything below — in the open, with receipts.
+Everything below applies the same ideas in public, with code you can read.
 
 ## 🔬 In the open at [purr.io](https://purr.io) — findings, not features
 
