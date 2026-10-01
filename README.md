@@ -4,7 +4,7 @@ I'm a **Senior AI Engineer** in Chicago. I've spent 20+ years wrangling petroleu
 
 ## 🛠️ Recent contract work
 
-I built the AI backend for a commercial oil & gas analytics product: you ask in plain English, and the answer comes from queries run against the well database at that moment, never from the model's memory. After the model drafts a reply, a grounding layer re-checks every figure against the query results and deletes whatever the data does not support, so an unsupported number cannot reach a user. An evaluation harness replays real analyst conversations against the live system on every change, scored against fixed pass bars with a running history, so a slow slide in answer quality surfaces as a red build rather than a hunch. Underneath, an Oracle-to-Parquet pipeline refuses to publish a release with fewer rows than the last one.
+I built the data pipeline, AI backend and CLI test framework for a commercial oil & gas analytics product: a *fact-gating* harness turns English queries or spatial AOIs into insight that carries only the numbers the deterministic stats support. Dataset-centric agents run ad-hoc SQL, generate and edit charts, and monitor their own quality. The harness detects any ephemeral drops in LLM quality and retries. The full Oracle-to-Parquet pipeline opens well, production, spatial, legal, financial and forecasting data to AI-assisted investigation.
 
 *Proprietary work — the client is unnamed and there is no code to show. The same ideas, in public and with code you can read, are below.*
 
@@ -25,7 +25,7 @@ The same rule governs the code and the process: **language at the boundaries, de
 
 How I direct the work is written down per project, in the `CLAUDE.md` files committed next to the code — including [one](https://github.com/rbhughes/well-spacing-playbook/blob/main/CLAUDE.md) that overrides autonomous mode outright: explain before writing, one step at a time, and leave the parts that carry the learning for me to type.
 
-None of it ships on vibes. The contract harness above is one example; agentic_dog_walker does the same to models, where none reaches the picker until it clears an automated qualification gauntlet.
+None of it ships on vibes. The fact-gated harness described above is one example; agentic_dog_walker does the same to models, where none reaches the picker until it clears an automated qualification gauntlet.
 
 AI makes me faster. The harness is what makes me willing to ship.
 
