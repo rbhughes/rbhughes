@@ -1,18 +1,12 @@
 # Hi, I'm Bryan 👋
 
-I'm a data engineer in Chicago. I've spent 15+ years wrangling petroleum and geoscience data — the messy, vendor-locked kind — and building the pipelines and tooling to set it free. Lately that means AI systems that answer questions from real data without making things up. My portfolio lives at **[purr.io](https://purr.io)**.
+I'm a **Senior AI Engineer** in Chicago. I've spent 20+ years wrangling petroleum and geoscience data — the messy, vendor-locked kind — and I now build AI systems on top of it that answer questions from real data without making things up. My portfolio lives at **[purr.io](https://purr.io)**.
 
 ## 🛠️ Recent contract work
 
-For the past while I built the AI side of a commercial oil & gas data platform: you ask questions in plain English, it answers from the actual well database. The work is proprietary so there's no code to show and I won't name the client, but the part worth describing is everything built around the model to keep it honest:
+I built the AI backend for a commercial oil & gas analytics product: you ask in plain English, and the answer comes from queries run against the well database at that moment, never from the model's memory. After the model drafts a reply, a grounding layer re-checks every figure against the query results and deletes whatever the data does not support, so an unsupported number cannot reach a user. An evaluation harness replays real analyst conversations against the live system on every change, scored against fixed pass bars with a running history, so a slow slide in answer quality surfaces as a red build rather than a hunch. Underneath, an Oracle-to-Parquet pipeline refuses to publish a release with fewer rows than the last one.
 
-- The model never supplies a number from memory. Every figure comes from a query run against the database at answer time; the model's job is deciding which queries to run and writing prose around the results.
-- After it writes, ordinary Python checks the draft against the query results. A number that isn't in the results gets deleted. An operator or formation the queries never returned can't be named. Each answer keeps a record of where every fact came from.
-- When a query fails, the agent gets a few chances to figure out why and try another approach, then stops and says why. It doesn't flail, and it doesn't paper over the gap with a guess.
-- Quality was checked by replaying a suite of real analyst conversations against the live system on every change, scored against fixed pass bars, with a running history so a slow slide in answer quality shows up as a red build instead of a hunch. One test feeds it deliberately misleading input just to prove the guardrails hold.
-- Underneath, the data moved from Oracle to Parquet through a pipeline that refuses to publish a release with fewer rows than the last one. Silent data loss fails loudly.
-
-Everything below applies the same ideas in public, with code you can read.
+*Proprietary work — the client is unnamed and there is no code to show. The same ideas, in public and with code you can read, are below.*
 
 ## 🔬 In the open at [purr.io](https://purr.io) — findings, not features
 
@@ -31,7 +25,7 @@ The same rule governs the code and the process: **language at the boundaries, de
 
 How I direct the work is written down per project, in the `CLAUDE.md` files committed next to the code — including [one](https://github.com/rbhughes/well-spacing-playbook/blob/main/CLAUDE.md) that overrides autonomous mode outright: explain before writing, one step at a time, and leave the parts that carry the learning for me to type.
 
-None of it ships on vibes. The contract work replays real analyst conversations against the live system on every change, scored against fixed pass bars with a running history, so a slow slide in quality becomes a red build instead of a hunch. agentic_dog_walker does the same to models: none reaches the picker until it clears an automated gauntlet.
+None of it ships on vibes. The contract harness above is one example; agentic_dog_walker does the same to models, where none reaches the picker until it clears an automated qualification gauntlet.
 
 AI makes me faster. The harness is what makes me willing to ship.
 
